@@ -205,20 +205,15 @@ def main():
     model_id = "Qwen/Qwen3-0.6B"
     tokenizer = AutoTokenizer.from_pretrained(model_id)
     model = AutoModelForCausalLM.from_pretrained(model_id, device_map="auto")
-    # tokenized_ds = ner_dataset.map(tokenize_and_align_labels, batched=True, fn_kwargs={"tokenizer": tokenizer, "labels_list": labels_list})
 
     model.config.label2id = {l: i for i, l in enumerate(labels_list)}
     model.config.id2label = {i: l for i, l in enumerate(labels_list)}
-    # p = pipeline("token-classification", model=model, tokenizer=tokenizer, aggregation_strategy="simple")
     sent = " ".join(ner_dataset['test'][0]["tokens"])
     print(f'Sentence: {sent}')
 
     test_sentence_tokens = ner_dataset['test'][0]["tokens"]
     test_sent = " ".join(test_sentence_tokens)
-    # pipeline_result = p(test_sent)
-    # bio_tags = convert_pipeline_output_to_bio(pipeline_result, test_sentence_tokens, labels_list)
     print("Tokens:", test_sentence_tokens)
-    # print("BIO Tags:", bio_tags)
 
     raw_output = llm_inference(model, tokenizer, test_sent)
     print('LLM output:', raw_output)
