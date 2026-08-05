@@ -230,7 +230,7 @@ def main():
     sampling_params = SamplingParams(structured_outputs=structured_outputs_params_json, max_tokens=500)
 
     model_id = "Qwen/Qwen3-1.7B"
-    llm = LLM(model=model_id, guided_decoding_backend='xgrammar', max_num_batched_tokens=512, max_model_len=4096, gpu_memory_utilization=0.8)
+    llm = LLM(model=model_id, max_num_batched_tokens=512, max_model_len=4096, gpu_memory_utilization=0.8)
 
 
     def schema_inference(model, sentence, sampling_params):
